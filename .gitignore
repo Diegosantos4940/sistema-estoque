@@ -1,0 +1,26 @@
+# Dependências
+node_modules/
+**/node_modules/
+
+# Arquivos de ambiente e segredos
+.env
+.env.*
+!.env.example
+
+# Arquivos gerados
+dist/
+build/
+coverage/
+
+# Logs
+*.log
+logs/
+
+# Credenciais
+credentials.json
+*service-account*.json
+*.pem
+
+# Sistema operacional
+.DS_Store
+Thumbs.db

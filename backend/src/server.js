@@ -1,9 +1,12 @@
 import "dotenv/config";
+
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
+import cookieParser from "cookie-parser";
 
 import pool from "./config/database.js";
+import authRoutes from "./routes/authRoutes.js";
 
 const app = express();
 
@@ -14,7 +17,8 @@ app.use(cors({
     credentials: true
 }));
 
-app.use(express.json());
+app.use(express.json({ limit: "10kb" }));
+app.use(cookieParser());
 
 // Rota inicial
 app.get("/", (req, res) => {
@@ -23,7 +27,7 @@ app.get("/", (req, res) => {
     });
 });
 
-// Teste de conexão com PostgreSQL
+// Teste do PostgreSQL
 app.get("/api/health/db", async (req, res) => {
     try {
         const resultado = await pool.query(
@@ -37,15 +41,19 @@ app.get("/api/health/db", async (req, res) => {
         });
 
     } catch (error) {
-        console.error("Erro ao conectar ao banco:", error);
+        console.error("Erro no banco:", error);
 
         res.status(500).json({
             status: "erro",
-            mensagem: "Não foi possível conectar ao banco de dados."
+            mensagem: "Falha na conexão com o banco."
         });
     }
 });
 
+// Rotas de autenticação
+app.use("/api/auth", authRoutes);
+
+// Inicialização
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {

@@ -1,0 +1,253 @@
+
+.movimentacoes {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.mov-cabecalho h1 {
+    margin: 0;
+    font-size: 25px;
+    color: #172033;
+}
+
+.mov-cabecalho p,
+.mov-historico-topo p {
+    color: #94a3b8;
+    font-size: 13px;
+    margin-top: 7px;
+}
+
+.mov-painel {
+    background: #fff;
+    border: 1px solid #e8edf4;
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.mov-painel-titulo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #2563eb;
+    margin-bottom: 20px;
+}
+
+.mov-painel-titulo h2,
+.mov-historico-topo h2 {
+    color: #172033;
+    font-size: 17px;
+    margin: 0;
+}
+
+.mov-operacoes {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 22px;
+}
+
+.operacao,
+.operacao-ativa {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 18px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: #fff;
+    color: #64748b;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.operacao-ativa.entrada {
+    background: #ecfdf5;
+    border-color: #86efac;
+    color: #15803d;
+}
+
+.operacao-ativa.saida {
+    background: #fef2f2;
+    border-color: #fca5a5;
+    color: #dc2626;
+}
+
+.mov-form-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 18px;
+}
+
+.mov-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 17px;
+}
+
+.mov-campo label,
+.mov-filtros label {
+    font-size: 13px;
+    color: #475569;
+    font-weight: 500;
+}
+
+.mov-campo input,
+.mov-campo select,
+.mov-filtros select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    outline: none;
+    background: #fff;
+    color: #334155;
+    font-size: 13px;
+}
+
+.mov-campo input:focus,
+.mov-campo select:focus {
+    border-color: #2563eb;
+}
+
+.mov-botao {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    background: #2563eb;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.mov-botao:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.mov-sucesso,
+.mov-erro {
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 13px;
+}
+
+.mov-sucesso {
+    background: #ecfdf5;
+    color: #15803d;
+}
+
+.mov-erro {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.mov-historico-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.mov-atualizar {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background: white;
+    color: #475569;
+    cursor: pointer;
+}
+
+.mov-filtros {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 22px 0;
+}
+
+.mov-filtros select {
+    width: auto;
+    min-width: 150px;
+}
+
+.mov-tabela-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.mov-tabela {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.mov-tabela th {
+    padding: 13px;
+    color: #94a3b8;
+    border-bottom: 1px solid #e8edf4;
+}
+
+.mov-tabela td {
+    padding: 14px 13px;
+    color: #475569;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.mov-tipo {
+    padding: 5px 9px;
+    border-radius: 20px;
+    font-size: 11px;
+    text-transform: capitalize;
+}
+
+.mov-tipo.entrada {
+    background: #ecfdf5;
+    color: #15803d;
+}
+
+.mov-tipo.saida {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.mov-tipo.ajuste {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.mov-vazio {
+    text-align: center;
+    padding: 30px !important;
+    color: #94a3b8 !important;
+}
+
+@media (max-width: 700px) {
+    .mov-form-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .mov-painel {
+        padding: 16px;
+    }
+
+    .mov-historico-topo {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .mov-filtros {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .mov-filtros select {
+        width: 100%;
+    }
+}

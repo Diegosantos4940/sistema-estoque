@@ -6,11 +6,11 @@ import helmet from "helmet";
 import cookieParser from "cookie-parser";
 
 import pool from "./config/database.js";
+
 import authRoutes from "./routes/authRoutes.js";
-
 import produtoRoutes from "./routes/produtoRoutes.js";
-
 import dashboardRoutes from "./routes/dashboardRoutes.js";
+import movimentacaoRoutes from "./routes/movimentacaoRoutes.js";
 
 const app = express();
 
@@ -56,6 +56,8 @@ app.get("/api/health/db", async (req, res) => {
 // Rotas de autenticação
 app.use("/api/auth", authRoutes);
 app.use("/api/produtos", produtoRoutes);
+app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/movimentacoes", movimentacaoRoutes);
 
 // Inicialização
 const PORT = process.env.PORT || 3000;
@@ -64,4 +66,3 @@ app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
 
-app.use("/api/dashboard", dashboardRoutes);

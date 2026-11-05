@@ -9,12 +9,16 @@ import {
     X,
     Boxes,
     RefreshCw,
-    LayoutDashboard
+    LayoutDashboard,
+    ArrowLeftRight,
 } from "lucide-react";
 
 import api from "./services/api";
 import Dashboard from "./components/Dashboard";
+import Movimentacoes from "./components/Movimentacoes";
 import "./App.css";
+
+
 
 function App() {
     const [usuario, setUsuario] = useState(null);
@@ -306,6 +310,15 @@ function App() {
                     <span>Produtos</span>
                 </button>
 
+                <button
+                    type="button"
+                    className={`menu-item ${pagina === "movimentacoes" ? "ativo" : ""}`}
+                    onClick={() => setPagina("movimentacoes")}
+                >
+                    <ArrowLeftRight size={19} />
+                    <span>Movimentações</span>
+                </button>
+
                 <div className="usuario-sidebar">
                     <div className="avatar">
                         {(usuario.nome || "U").charAt(0).toUpperCase()}
@@ -330,8 +343,11 @@ function App() {
             
                 {pagina === "dashboard"? (
                         <Dashboard />
-                ) : (
+                ) : pagina === "movimentacoes" ? (
+                        <Movimentacoes />
+                ):(
                     <>
+
                 <header className="cabecalho">
                     <div>
                         <h1>Produtos</h1>

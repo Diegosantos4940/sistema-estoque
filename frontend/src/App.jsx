@@ -8,15 +8,18 @@ import {
     LogOut,
     X,
     Boxes,
-    RefreshCw
+    RefreshCw,
+    LayoutDashboard
 } from "lucide-react";
 
 import api from "./services/api";
+import Dashboard from "./components/Dashboard";
 import "./App.css";
 
 function App() {
     const [usuario, setUsuario] = useState(null);
     const [carregando, setCarregando] = useState(true);
+    const [pagina, setPagina] = useState("dashboard");
 
     const [produtos, setProdutos] = useState([]);
     const [pesquisa, setPesquisa] = useState("");
@@ -285,10 +288,23 @@ function App() {
 
                 <div className="menu-titulo">MENU PRINCIPAL</div>
 
-                <div className="menu-item ativo">
+                <button
+                    type="button"
+                    className={`menu-item ${pagina === "dashboard" ? "ativo" : ""}`}
+                    onClick={() => setPagina("dashboard")}
+                >
+                    <LayoutDashboard size={19} />
+                    <span>Dashboard</span>
+                </button>
+
+                <button
+                    type="button"
+                    className={`menu-item ${pagina === "produtos" ? "ativo" : ""}`}
+                    onClick={() => setPagina("produtos")}
+                >
                     <Boxes size={19} />
                     <span>Produtos</span>
-                </div>
+                </button>
 
                 <div className="usuario-sidebar">
                     <div className="avatar">
@@ -311,6 +327,11 @@ function App() {
             </aside>
 
             <main className="conteudo">
+            
+                {pagina === "dashboard"? (
+                        <Dashboard />
+                ) : (
+                    <>
                 <header className="cabecalho">
                     <div>
                         <h1>Produtos</h1>
@@ -457,6 +478,8 @@ function App() {
                         </table>
                     </div>
                 </section>
+            </>
+                )}
             </main>
 
             {/* MODAL DE CADASTRO E EDIÇÃO */}

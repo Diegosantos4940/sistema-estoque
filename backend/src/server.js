@@ -10,6 +10,8 @@ import authRoutes from "./routes/authRoutes.js";
 
 import produtoRoutes from "./routes/produtoRoutes.js";
 
+import dashboardRoutes from "./routes/dashboardRoutes.js";
+
 const app = express();
 
 app.use(helmet());
@@ -61,3 +63,5 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
+
+app.use("/api/dashboard", dashboardRoutes);

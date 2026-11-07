@@ -8,6 +8,7 @@ import cookieParser from "cookie-parser";
 import pool from "./config/database.js";
 
 import authRoutes from "./routes/authRoutes.js";
+import vendaRoutes from "./routes/vendaRoutes.js";
 import produtoRoutes from "./routes/produtoRoutes.js";
 import dashboardRoutes from "./routes/dashboardRoutes.js";
 import movimentacaoRoutes from "./routes/movimentacaoRoutes.js";
@@ -55,6 +56,7 @@ app.get("/api/health/db", async (req, res) => {
 
 // Rotas de autenticação
 app.use("/api/auth", authRoutes);
+app.use("/api/vendas", vendaRoutes);
 app.use("/api/produtos", produtoRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/movimentacoes", movimentacaoRoutes);

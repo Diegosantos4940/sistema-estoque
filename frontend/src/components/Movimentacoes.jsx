@@ -49,6 +49,7 @@ export default function Movimentacoes() {
     }
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         carregarProdutos().catch((error) => {
             console.error(error);
             setErro("Erro ao carregar os produtos.");
@@ -56,7 +57,9 @@ export default function Movimentacoes() {
     }, []);
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         carregarMovimentacoes();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [tipo]);
 
     function atualizarCampo(e) {

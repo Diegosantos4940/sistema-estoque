@@ -221,3 +221,100 @@ export async function registrarVenda(req, res) {
         conexao.release();
     }
 }
+
+// LISTAR VENDAS
+export async function listarVendas(req, res) {
+    try {
+        const resultado = await pool.query(`
+            SELECT
+                v.id,
+                v.usuario_id,
+                u.nome AS usuario,
+                v.valor_total,
+                v.data_venda,
+                COALESCE(SUM(iv.quantidade), 0) AS total_itens
+            FROM vendas v
+            LEFT JOIN usuarios u
+                ON u.id = v.usuario_id
+            LEFT JOIN itens_venda iv
+                ON iv.venda_id = v.id
+            GROUP BY
+                v.id,
+                v.usuario_id,
+                u.nome,
+                v.valor_total,
+                v.data_venda
+            ORDER BY v.data_venda DESC, v.id DESC
+            LIMIT 100
+        `);
+
+        return res.status(200).json(resultado.rows);
+
+    } catch (error) {
+        console.error("Erro ao listar vendas:", error);
+
+        return res.status(500).json({
+            mensagem: "Erro ao consultar as vendas."
+        });
+    }
+}
+
+
+// CONSULTAR DETALHES DE UMA VENDA
+export async function detalharVenda(req, res) {
+    const id = Number(req.params.id);
+
+    if (!Number.isInteger(id) || id <= 0 || id > 2147483647) {
+        return res.status(400).json({
+            mensagem: "ID da venda inválido."
+        });
+    }
+
+    try {
+        const resultadoVenda = await pool.query(`
+            SELECT
+                v.id,
+                v.usuario_id,
+                u.nome AS usuario,
+                v.valor_total,
+                v.data_venda
+            FROM vendas v
+            LEFT JOIN usuarios u
+                ON u.id = v.usuario_id
+            WHERE v.id = $1
+        `, [id]);
+
+        if (resultadoVenda.rows.length === 0) {
+            return res.status(404).json({
+                mensagem: "Venda não encontrada."
+            });
+        }
+
+        const resultadoItens = await pool.query(`
+            SELECT
+                iv.id,
+                iv.produto_id,
+                p.nome AS produto,
+                iv.quantidade,
+                iv.preco_unitario,
+                iv.subtotal
+            FROM itens_venda iv
+            JOIN produtos p
+                ON p.id = iv.produto_id
+            WHERE iv.venda_id = $1
+            ORDER BY iv.id
+        `, [id]);
+
+        return res.status(200).json({
+            ...resultadoVenda.rows[0],
+            itens: resultadoItens.rows
+        });
+
+    } catch (error) {
+        console.error("Erro ao detalhar venda:", error);
+
+        return res.status(500).json({
+            mensagem: "Erro ao consultar os detalhes da venda."
+        });
+    }
+}

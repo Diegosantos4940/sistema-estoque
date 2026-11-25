@@ -1,7 +1,12 @@
 
 import express from "express";
 
-import { registrarVenda } from "../controllers/vendaController.js";
+import {
+    registrarVenda,
+    listarVendas,
+    detalharVenda
+} from "../controllers/vendaController.js";
+
 import { autenticar } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
@@ -11,5 +16,11 @@ router.use(autenticar);
 
 // Registrar venda
 router.post("/", registrarVenda);
+
+// Listar vendas
+router.get("/", listarVendas);
+
+// Consultar detalhes de uma venda
+router.get("/:id", detalharVenda);
 
 export default router;

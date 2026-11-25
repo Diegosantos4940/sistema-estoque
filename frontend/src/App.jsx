@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
     Package,
     Search,
@@ -11,11 +11,13 @@ import {
     RefreshCw,
     LayoutDashboard,
     ArrowLeftRight,
+    ShoppingCart,
 } from "lucide-react";
 
 import api from "./services/api";
 import Dashboard from "./components/Dashboard";
 import Movimentacoes from "./components/Movimentacoes";
+import Vendas from "./components/Vendas";
 import "./App.css";
 
 
@@ -57,7 +59,7 @@ function App() {
     }, []);
 
     // BUSCAR PRODUTOS
-    async function carregarProdutos(termo = pesquisa) {
+    const carregarProdutos = useCallback(async (termo) => {
         try {
             setErro("");
 
@@ -73,18 +75,18 @@ function App() {
                 "Não foi possível carregar os produtos."
             );
         }
-    }
+    }, []);
 
     // PESQUISA AUTOMÁTICA
     useEffect(() => {
-        if (!usuario) return;
+        if (!usuario || pagina !== "produtos") return;
 
         const intervalo = setTimeout(() => {
             carregarProdutos(pesquisa);
         }, 300);
 
         return () => clearTimeout(intervalo);
-    }, [pesquisa, usuario]);
+    }, [carregarProdutos, pesquisa, usuario, pagina]);
 
     // LOGIN
     async function fazerLogin(event) {
@@ -194,7 +196,7 @@ function App() {
                 preco: ""
             });
 
-            await carregarProdutos();
+            await carregarProdutos(pesquisa);
 
         } catch (error) {
             setErro(
@@ -219,7 +221,7 @@ function App() {
 
             await api.delete(`/produtos/${produto.id}`);
 
-            await carregarProdutos();
+            await carregarProdutos(pesquisa);
 
         } catch (error) {
             setErro(
@@ -319,6 +321,15 @@ function App() {
                     <span>Movimentações</span>
                 </button>
 
+                <button
+                    type="button"
+                    className={`menu-item ${pagina === "vendas" ? "ativo" : ""}`}
+                    onClick={() => setPagina("vendas")}
+                >
+                    <ShoppingCart size={19} />
+                    <span>Vendas</span>
+                </button>
+
                 <div className="usuario-sidebar">
                     <div className="avatar">
                         {(usuario.nome || "U").charAt(0).toUpperCase()}
@@ -345,6 +356,8 @@ function App() {
                         <Dashboard />
                 ) : pagina === "movimentacoes" ? (
                         <Movimentacoes />
+                ) : pagina === "vendas" ? (
+                        <Vendas />
                 ):(
                     <>
 
@@ -389,7 +402,7 @@ function App() {
 
                         <button
                             className="botao-atualizar"
-                            onClick={() => carregarProdutos()}
+                            onClick={() => carregarProdutos(pesquisa)}
                             title="Atualizar lista"
                         >
                             <RefreshCw size={18} />

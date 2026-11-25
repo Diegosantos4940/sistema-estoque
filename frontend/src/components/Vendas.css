@@ -1,0 +1,17 @@
+.venda-rodape {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-top: 22px;
+    color: #475569;
+    font-size: 13px;
+}
+
+.venda-rodape strong {
+    display: block;
+    margin-top: 4px;
+    color: #172033;
+    font-size: 21px;
+}

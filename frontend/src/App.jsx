@@ -12,12 +12,14 @@ import {
     LayoutDashboard,
     ArrowLeftRight,
     ShoppingCart,
+    History,
 } from "lucide-react";
 
 import api from "./services/api";
 import Dashboard from "./components/Dashboard";
 import Movimentacoes from "./components/Movimentacoes";
 import Vendas from "./components/Vendas";
+import HistoricoVendas from "./components/HistoricoVendas";
 import "./App.css";
 
 
@@ -330,6 +332,15 @@ function App() {
                     <span>Vendas</span>
                 </button>
 
+                <button
+                    type="button"
+                    className={`menu-item ${pagina === "historico-vendas" ? "ativo" : ""}`}
+                    onClick={() => setPagina("historico-vendas")}
+                >
+                <History size={19} />
+                <span>Histórico de vendas</span>
+                </button>
+
                 <div className="usuario-sidebar">
                     <div className="avatar">
                         {(usuario.nome || "U").charAt(0).toUpperCase()}
@@ -358,7 +369,9 @@ function App() {
                         <Movimentacoes />
                 ) : pagina === "vendas" ? (
                         <Vendas />
-                ):(
+                ) : pagina === "historico-vendas" ? (
+                    <HistoricoVendas />
+                ) : (
                     <>
 
                 <header className="cabecalho">

@@ -13,6 +13,7 @@ import {
     ArrowLeftRight,
     ShoppingCart,
     History,
+    Users,
 } from "lucide-react";
 
 import api from "./services/api";
@@ -20,6 +21,7 @@ import Dashboard from "./components/Dashboard";
 import Movimentacoes from "./components/Movimentacoes";
 import Vendas from "./components/Vendas";
 import HistoricoVendas from "./components/HistoricoVendas";
+import Usuarios from "./components/Usuarios";
 import "./App.css";
 
 
@@ -125,6 +127,10 @@ function App() {
 
         setUsuario(null);
         setProdutos([]);
+        setPagina("dashboard");
+        setModalAberto(false);
+        setProdutoEditando(null);
+        setErro("");
     }
 
     // ABRIR FORMULÁRIO
@@ -341,6 +347,17 @@ function App() {
                 <span>Histórico de vendas</span>
                 </button>
 
+                {usuario.perfil === "admin" && (
+                    <button
+                        type="button"
+                        className={`menu-item ${pagina === "usuarios" ? "ativo" : ""}`}
+                        onClick={() => setPagina("usuarios")}
+                    >
+                        <Users size={19} />
+                        <span>Usuários</span>
+                    </button>
+                )}
+
                 <div className="usuario-sidebar">
                     <div className="avatar">
                         {(usuario.nome || "U").charAt(0).toUpperCase()}
@@ -371,6 +388,12 @@ function App() {
                         <Vendas />
                 ) : pagina === "historico-vendas" ? (
                     <HistoricoVendas />
+                ) : pagina === "usuarios" ? (
+                    usuario.perfil === "admin" ? (
+                        <Usuarios />
+                    ) : (
+                        <Dashboard />
+                    )
                 ) : (
                     <>
 
